@@ -2,6 +2,8 @@
 
 A full-featured todo list web application built with PHP and MySQL as part of a technical assessment for Infinity. This application allows users to register, login, and manage their tasks through an organized checklist system with groups.
 
+[Technical Assessment Test PDF](https://github.com/AbdulazizBaHaj/technical-assessment-infinity-todo/blob/main/docs/Technical%20Assessment%20Test%202.3%20-%20Abdulaziz%20Ba%20Haj.pdf)
+
 ## 📋 Project Overview
 
 This project was developed as a response to a technical assessment that required building a web application where users can:
