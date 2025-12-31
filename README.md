@@ -193,24 +193,6 @@ http://localhost/technical-assessment-infinity-todo
 - **Navigation Menu:** Quick access to all your checklist groups and checklists
 - **Quick Actions:** Create new checklist groups directly from the dashboard
 
-## 🔒 Security Considerations
-
-**Note:** This project was built as a technical assessment and contains some security patterns that should be improved for production use:
-
-- Password hashing uses MD5 (should be upgraded to `password_hash()` with bcrypt)
-- SQL queries are not using prepared statements (vulnerable to SQL injection)
-- CSRF protection is not implemented
-- Input validation could be enhanced
-
-**Recommended improvements for production:**
-
-- Implement prepared statements for all database queries
-- Use `password_hash()` and `password_verify()` for passwords
-- Add CSRF tokens to forms
-- Implement input sanitization and validation
-- Add XSS protection
-- Use environment variables for sensitive configuration
-
 ## 🎯 Technical Assessment Requirements Met
 
 ✅ User registration and authentication  
@@ -220,20 +202,6 @@ http://localhost/technical-assessment-infinity-todo
 ✅ Expanded functionality (hierarchical organization with groups and checklists)  
 ✅ Git repository with instructions  
 ✅ Clean, organized code structure
-
-## 🔮 Future Enhancements
-
-- Task notifications/reminders
-- Task priority levels
-- Task categories and tags
-- Search and filter functionality
-- Task sharing between users
-- Mobile responsive improvements
-- RESTful API
-- Modern frontend framework integration (React/Vue)
-- Email notifications for due tasks
-- Task attachments
-- Recurring tasks
 
 ## 📄 License
 
