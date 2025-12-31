@@ -5,12 +5,12 @@ $_SESSION['username'];
 $_SESSION['id'];
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
+    header('location: ../auth/login.php');
 }
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['username']);
-    header("location: login.php");
+    header("location: controllers/auth/login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -36,20 +36,14 @@ if (isset($_GET['logout'])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.php">Dashboard <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../../index.php">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li> -->
                 <?php
-                require 'config.php';
+                require '../../config/config.php';
                 $user_id = $_SESSION['id'];
                 $query = $link->query("SELECT * FROM `checklist_groups` WHERE user_id=$user_id  ORDER BY `id` ASC");
-                // $query1 = $link->query("SELECT * FROM `checklists` WHERE checklist_group_id=$user_id  ORDER BY `id` ASC");
                 $count = 1;
                 while ($row = $query->fetch_array()) {
-                    // require 'config.php';
-
                 ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +58,7 @@ if (isset($_GET['logout'])) {
                             $count1 = 1;
                             while ($row1 = $query1->fetch_array()) {
                             ?>
-                                <a class="dropdown-item" href="showChecklist.php?id=<?php echo $row1['id'] ?>&nameChecklist=<?php echo $row1['name'] ?>"><?php echo $row1['name'] ?></a>
+                                <a class="dropdown-item" href="../checklist/showChecklist.php?id=<?php echo $row1['id'] ?>&nameChecklist=<?php echo $row1['name'] ?>"><?php echo $row1['name'] ?></a>
                             <?php } ?>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="delete_group.php?id=<?php echo $row['id'] ?>"><button type="button" class="btn btn-danger">Delete Checklist Group</button></a>
@@ -82,7 +76,8 @@ if (isset($_GET['logout'])) {
                 </span>
                 <?php if (isset($_SESSION['username'])) : ?>
                     <input type="text" class="form-control" placeholder="<?php echo $_SESSION['username']; ?>" aria-label="Input group example" aria-describedby="basic-addon1" readonly>
-                    <a href="index.php?logout='1'"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button></a>
+                    <!-- <a href="../../index.php?logout='1'"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button></a> -->
+                    <a href="../../index.php?logout=1"><button class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button></a>
                 <?php endif ?>
             </form>
         </div>
@@ -107,8 +102,7 @@ if (isset($_GET['logout'])) {
     <div class="container mt-5">
         <h2>Checklists for <?php echo  $_GET['nameGroup'] ?>'s Group!</h2>
 
-
-        <form action="insertChecklist.php" method="POST">
+        <form action="../checklist/insertChecklist.php" method="POST">
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-sm text-right">
@@ -117,6 +111,7 @@ if (isset($_GET['logout'])) {
                     <div class="col-6">
                         <input class="form-control" type="text" placeholder="Checklist Name" name="nameChecklist">
                         <input class="form-control" type="text" name="id" value="<?php echo $_GET['id'] ?>" hidden>
+                        <input class="form-control" type="text" name="name" value="<?php echo $_GET['nameGroup'] ?>" hidden>
                     </div>
                     <div class="col-sm">
                         <button type="submit" class="btn btn-success" name="submit_list">Create New Checklist</button>
@@ -124,7 +119,6 @@ if (isset($_GET['logout'])) {
                 </div>
             </div>
         </form>
-
 
         <table class="table table-striped mt-5">
             <thead>
@@ -137,7 +131,6 @@ if (isset($_GET['logout'])) {
             </thead>
             <tbody>
                 <?php
-                // require 'config.php';
                 $group_id = $_GET['id'];
                 $query = $link->query("SELECT * FROM `checklists` WHERE checklist_group_id=$group_id  ORDER BY `id` ASC");
                 $count = 1;
@@ -146,8 +139,8 @@ if (isset($_GET['logout'])) {
                     <tr>
                         <th scope="row"><?php echo $count ?></th>
                         <td><?php echo $row['name'] ?></td>
-                        <td><a href="showChecklist.php?id=<?php echo $row['id'] ?>&nameChecklist=<?php echo $row['name'] ?>"><button class="btn btn-outline-primary" type="submit">View</button></a></td>
-                        <td><a href="delete_checklist.php?id=<?php echo $group_id ?>&nameGroup=<?php echo $row['name'] ?>&checklist_id=<?php echo $row['id'] ?>"><button class="btn btn-outline-danger" type="submit">Delete</button></a></td>
+                        <td><a href="../checklist/showChecklist.php?id=<?php echo $row['id'] ?>&nameChecklist=<?php echo $row['name'] ?>"><button class="btn btn-outline-primary" type="submit">View</button></a></td>
+                        <td><a href="../checklist/delete_checklist.php?id=<?php echo $group_id ?>&nameGroup=<?php echo $_GET['nameGroup'] ?>&checklist_id=<?php echo $row['id'] ?>"><button class="btn btn-outline-danger" type="submit">Delete</button></a></td>
                     </tr>
                 <?php
                     $count = $count + 1;;

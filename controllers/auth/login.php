@@ -1,4 +1,4 @@
-<?php include('server.php') ?>
+<?php include('../../includes/server.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +29,7 @@
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="name">Username</label>
-                <input class="form-control" type="text" name="username" >
+                <input class="form-control" type="text" name="username">
             </div>
 
             <!-- Password input -->

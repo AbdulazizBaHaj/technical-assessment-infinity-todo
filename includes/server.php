@@ -92,7 +92,7 @@ if (isset($_POST['login_user'])) {
         $_SESSION['id'] = $row["id"];
         $_SESSION['username'] = $row["name"];
       }
-      header('location: index.php');
+      header("location: ../../index.php");
     } else {
       echo "0 results";
     }

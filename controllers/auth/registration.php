@@ -1,4 +1,4 @@
-<?php include('server.php') ?>
+<?php include('../../includes/server.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +30,7 @@
 
     <div class="container mt-5" style="width: 30%;">
         <form action="registration.php" method="post">
-            <?php include('errors.php'); ?>
+            <?php include('../../includes/errors.php'); ?>
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="name">Username</label>

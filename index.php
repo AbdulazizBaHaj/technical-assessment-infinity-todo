@@ -5,12 +5,12 @@ $_SESSION['username'];
 $_SESSION['id'];
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
+    header('location: controllers/auth/login.php');
 }
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['username']);
-    header("location: login.php");
+    header("location: controllers/auth/login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -38,25 +38,19 @@ if (isset($_GET['logout'])) {
                 <li class="nav-item active">
                     <a class="nav-link" href="index.php">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li> -->
                 <?php
-                require 'config.php';
+                require 'config/config.php';
                 $user_id = $_SESSION['id'];
                 $query = $link->query("SELECT * FROM `checklist_groups` WHERE user_id=$user_id  ORDER BY `id` ASC");
-                // $query1 = $link->query("SELECT * FROM `checklists` WHERE checklist_group_id=$user_id  ORDER BY `id` ASC");
                 $count = 1;
                 while ($row = $query->fetch_array()) {
-                    // require 'config.php';
-
                 ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?php echo $row['name']; ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="showGroup.php?id=<?php echo $row['id'] ?>&nameGroup=<?php echo $row['name'] ?>">Edit Checklist Group</a>
+                            <a class="dropdown-item" href="controllers/group/showGroup.php?id=<?php echo $row['id'] ?>&nameGroup=<?php echo $row['name'] ?>">Edit Checklist Group</a>
                             <div class="dropdown-divider"></div>
                             <?php
                             $group_id = $row['id'];
@@ -64,10 +58,10 @@ if (isset($_GET['logout'])) {
                             $count1 = 1;
                             while ($row1 = $query1->fetch_array()) {
                             ?>
-                                <a class="dropdown-item" href="showChecklist.php?id=<?php echo $row1['id'] ?>&nameChecklist=<?php echo $row1['name'] ?>"><?php echo $row1['name'] ?></a>
+                                <a class="dropdown-item" href="controllers/checklist/showChecklist.php?id=<?php echo $row1['id'] ?>&nameChecklist=<?php echo $row1['name'] ?>"><?php echo $row1['name'] ?></a>
                             <?php } ?>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="delete_group.php?id=<?php echo $row['id'] ?>"><button type="button" class="btn btn-danger">Delete Checklist Group</button></a>
+                            <a class="dropdown-item" href="controllers/group/delete_group.php?id=<?php echo $row['id'] ?>"><button type="button" class="btn btn-danger">Delete Checklist Group</button></a>
                         </div>
                     </li>
                 <?php }
@@ -82,12 +76,13 @@ if (isset($_GET['logout'])) {
                 </span>
                 <?php if (isset($_SESSION['username'])) : ?>
                     <input type="text" class="form-control" placeholder="<?php echo $_SESSION['username']; ?>" aria-label="Input group example" aria-describedby="basic-addon1" readonly>
-                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit"><a href="index.php?logout='1'">Logout</a></button>
+                    <a href="../../index.php?logout=1"><button class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button></a>
+                    <!-- <a href="index.php?logout='1'"><button class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button></a> -->
                 <?php endif ?>
             </form>
         </div>
     </nav>
-    <form method="post" action="insertChecklistGroup.php">
+    <form method="post" action="controllers/group/insertChecklistGroup.php">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-sm text-right">
@@ -95,7 +90,7 @@ if (isset($_GET['logout'])) {
                 </div>
                 <div class="col-6">
                     <input class="form-control" type="text" placeholder="Checklist Group Name" name="name">
-                    <input class="form-control" type="text" placeholder="Checklist Group Name" name="user_id" hidden value="<?php $_SESSION['id']; ?>">
+                    <input class="form-control" type="text" placeholder="Checklist Group Name" name="user_id" hidden value="<?php echo $_SESSION['id']; ?>">
                 </div>
                 <div class="col-sm">
                     <button type="submit" class="btn btn-success" name="submit_group">Create New Checklist Group</button>
@@ -120,7 +115,6 @@ if (isset($_GET['logout'])) {
             </thead>
             <tbody>
                 <?php
-                // require 'config.php';
                 $user_id = $_SESSION['id'];
                 $query = $link->query("SELECT * FROM `tasks` WHERE user_id=$user_id  ORDER BY `id` ASC");
                 $count = 1;
@@ -137,8 +131,8 @@ if (isset($_GET['logout'])) {
                             <td><?php echo $row['name'];  ?></td>
                             <td><?php echo $row['desc'];  ?></td>
                             <td><?php echo $due;  ?></td>
-                            <td><a href="taskDoneHome.php?task_id=<?php echo $row['id'];  ?>"><button class="btn btn-outline-success" type="submit">Done</button></a></td>
-                            <td><a href="delete_task_home.php?task_id=<?php echo $row['id']; ?>"><button class="btn btn-outline-danger" type="submit">Delete</button></a></td>
+                            <td><a href="controllers/task/taskDoneHome.php?task_id=<?php echo $row['id'];  ?>"><button class="btn btn-outline-success" type="button">Done</button></a></td>
+                            <td><a href="controllers/task/delete_task_home.php?task_id=<?php echo $row['id']; ?>"><button class="btn btn-outline-danger" type="button">Delete</button></a></td>
                         </tr>
                 <?php
                         $count = $count + 1;

@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../../config/config.php';
 
 if (isset($_POST['submit_list'])) {
     if ($_POST['nameChecklist'] != "") {
@@ -8,6 +8,6 @@ if (isset($_POST['submit_list'])) {
         $group_name = $_POST["name"];
 
         $link->query("INSERT INTO `checklists` (name, checklist_group_id) VALUES('$list_name', '$group_id')");
-        header("location:showGroup.php?nameGroup={$group_name}&id={$group_id}");
+        header("location: ../group/showGroup.php?nameGroup={$group_name}&id={$group_id}");
     }
 }
